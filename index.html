@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Welcome to Axel's Design Portfolio. Explore industrial design, UI/UX design, and more.">
+    <meta name="keywords" content="Axel, Design, Industrial Design, UI/UX, Portfolio, Student, GitHub Pages">
+    <title>Axel's Design Portfolio</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'DIN', sans-serif;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Progressive Gradient Text */
+        .gradient-text {
+            background: linear-gradient(180deg, #ffffff, #adadad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 4rem;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        /* Content Container */
+        .content {
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Progress Bar at the Top */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 5px 0;
+            background-color: #000; /* 与页面背景颜色一致 */
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 5px;
+            background-color: #fff;
+            transition: width 2s;
+        }
+
+        /* Countdown Text */
+        #countdownText {
+            font-size: 1.2rem;
+            margin: 20px 0;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Language Switcher at the Bottom */
+        .language-switcher {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-flex;
+            background: none;
+            gap: 15px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .language-switcher:hover {
+            opacity: 1;
+        }
+
+        .language-switcher span {
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.6);
+            transition: color 0.3s;
+        }
+
+        .language-switcher span:hover {
+            color: rgba(255, 255, 255, 1);
+        }
+
+        /* Button Styles */
+        button {
+            padding: 14px 26px;
+            font-size: 16px;
+            border: 1px hsla(0,0%,100%,0.14);
+            box-shadow: 0 0 0 1px hsla(0,0%,100%,0.14);
+            background: none;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /**** 动画效果****/
+        /*渐变动画*/
+        @keyframes gradientEffect {
+            0% {background-position: 0% 50%;}
+            100% {background-position: 100% 50%;}
+        }
+        /*计时动画*/
+        @keyframes countdownFly {
+            0% {opacity: 0;transform: translateY(50px);}
+            50% {opacity: 0.5;transform: translateY(20px);}
+            100% {opacity: 1;transform: translateY(0);}
+        }
+
+        /*加载动画*/
+        @keyframes loadingProcess {
+            0% {width: 0;}
+            100% {width: 100%}
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="content">
+        <h1 class="gradient-text" id="titleText">Redirecting...</h1>
+        <p id="countdownText">You will be redirected to the new website in <span id="countdown">5</span> seconds.</p>
+        <button onclick="window.location.href='http://www.axel.xin'">Go to Axel.xin</button>
+    </div>
+    <div class="language-switcher">
+        <span onclick="switchLanguage('en')">EN</span>
+        <span onclick="switchLanguage('zh')">ZH</span>
+    </div>
+
+    <script>
+        // Progress Bar & Countdown Animation
+        const progressBar = document.getElementById('progressBar');
+        const countdownElement = document.getElementById('countdown');
+        const countdownText = document.getElementById('countdownText');
+
+        let countdown = 60;
+        const updateTime = 1000; // 1 second
+        const intervalId = setInterval(() => {
+            if (countdown <= 0) {
+                clearInterval(intervalId);
+                window.location.href = 'http://www.axel.xin';
+                return;
+            }
+
+            countdown--;
+            countdownElement.textContent = countdown;
+            const progress = ((60 - countdown) / 60) * 100; // 计算进度百分比
+            progressBar.style.width = `${progress}%`;
+
+            // Update countdown text with the correct language
+            if (document.querySelector('html').lang === 'en') {
+                countdownText.textContent = `You will go to the new website in ${countdown} seconds.`;
+            } else if (document.querySelector('html').lang === 'zh') {
+                countdownText.textContent = `您将在 ${countdown} 秒后前往我的主页`;
+            }
+        }, updateTime);
+
+        // Language Switcher
+        function switchLanguage(lang) {
+            document.querySelector('html').lang = lang;
+            const texts = {
+                en: {
+                    title: 'Redirecting...',
+                    countdownText: 'You will be redirected to the new website in',
+                    button: 'Go to Axel.xin to find out more',
+                    languageSwitcher: ['EN', 'ZH']
+                },
+                zh: {
+                    title: '即将传送…',
+                    countdownText: '您将在',
+                    button: '前往 Axel.xin 查看更多内容',
+                    languageSwitcher: ['英文', '中文']
+                }
+            };
+
+            document.title = texts[lang].title;
+            document.getElementById('titleText').textContent = texts[lang].title;
+            document.querySelector('button').textContent = texts[lang].button;
+            document.querySelectorAll('.language-switcher span').forEach((span, index) => {
+                span.textContent = texts[lang].languageSwitcher[index];
+            });
+        }
+
+        // Auto-detect language
+        const userLang = navigator.language || navigator.userLanguage;
+        const defaultLang = userLang.startsWith('zh') ? 'zh' : 'en';
+        document.querySelector('html').lang = defaultLang;
+        switchLanguage(defaultLang);
+    </script>
+</body>
+</html>
