@@ -135,7 +135,7 @@
     </div>
     <div class="content">
         <h1 class="gradient-text" id="titleText">Redirecting...</h1>
-        <p id="countdownText">You will be redirected to the new website in <span id="countdown">5</span> seconds.</p>
+        <p id="countdownText">You will be redirected to the new website in <span id="countdown">10</span> seconds.</p>
         <button onclick="window.location.href='http://www.axel.xin'">Go to Axel.xin</button>
     </div>
     <div class="language-switcher">
@@ -149,7 +149,7 @@
         const countdownElement = document.getElementById('countdown');
         const countdownText = document.getElementById('countdownText');
 
-        let countdown = 60;
+        let countdown = 10;
         const updateTime = 1000; // 1 second
         const intervalId = setInterval(() => {
             if (countdown <= 0) {
@@ -160,7 +160,7 @@
 
             countdown--;
             countdownElement.textContent = countdown;
-            const progress = ((60 - countdown) / 60) * 100; // 计算进度百分比
+            const progress = ((10 - countdown) / 10) * 100; // 计算进度百分比
             progressBar.style.width = `${progress}%`;
 
             // Update countdown text with the correct language
